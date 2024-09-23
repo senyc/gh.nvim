@@ -143,6 +143,7 @@ function M.get_git_remote()
   if out == nil then
     return nil
   end
-  return out
+  return out:gsub("\n", "")
 end
+
 return M
