@@ -433,7 +433,7 @@ function M.close_pull()
     -- rip down our pull request tab if it exists
     if
         s.pull_state.tab ~= nil and
-        vim.api.nvim_tabpage_is_valid(s.pull_state.tab) 
+        vim.api.nvim_tabpage_is_valid(s.pull_state.tab)
     then
         if vim.api.nvim_tabpage_is_valid(s.pull_state.tab) then
             local other_tab = nil
@@ -722,7 +722,8 @@ function M.submit_review()
             'COMMENT'
         }
         if body ~= nil then
-            body = vim.fn.shellescape(body)
+            -- Sanitize review comment, remove extra quotes
+            body = vim.fn.shellescape(body):sub(2,-2)
         end
         local out = ghcli.submit_review(s.pull_state["number"], s.pull_state.review["id"], body, actions[action])
         if out == nil then
